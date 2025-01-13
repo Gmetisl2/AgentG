@@ -1,4 +1,4 @@
-name: Run Script Every 4 Hours
+name: run reward script
 
 on:
   workflow_dispatch:
