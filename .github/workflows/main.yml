@@ -41,6 +41,8 @@ jobs:
         python scripts/AgentG_reward.py
 
     - name: Commit and push if content changed
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the default GitHub token
       run: |-
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
