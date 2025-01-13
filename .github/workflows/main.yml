@@ -1,0 +1,50 @@
+name: Run Script Every 4 Hours
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Runs every 4 hours
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false  # Disable automatic token authentication
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Decode user.session
+      run: |
+        echo "${{ secrets.USER_SESSION_B64_PART1 }}${{ secrets.USER_SESSION_B64_PART2 }}${{ secrets.USER_SESSION_B64_PART3 }}${{ secrets.USER_SESSION_B64_PART4 }}${{ secrets.USER_SESSION_B64_PART5 }}${{ secrets.USER_SESSION_B64_PART6 }}${{ secrets.USER_SESSION_B64_PART7 }}${{ secrets.USER_SESSION_B64_PART8 }}" | base64 --decode > user.session
+
+    - name: Run script
+      env:
+        TG_API_ID: ${{ secrets.TG_API_ID }}
+        TG_API_HASH: ${{ secrets.TG_API_HASH }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        GROUP_ID: ${{ secrets.GROUP_ID }}
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        python scripts/AgentG_reward.py
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add gmetis.db
+        git commit -m 'Update SQLite database'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
