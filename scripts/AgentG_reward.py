@@ -14,7 +14,7 @@ import openai
 WINDOW_IN_H = 4
 TOTAL_REWARD = 100
 AMOUNT_HELD = 100
-EXCLUDED_USERS = []
+EXCLUDED_USERS = [7340946957,5571930248, 7843080080]
 
 # Set up logging
 logging.basicConfig(
@@ -376,7 +376,7 @@ async def main():
                 f"🎯 Reward Round #{reward_round}\n\n"
                 f"🎉 Congratulations @{winner_info['username']}! 🎉\n"
                 f"✨ You've been selected for a reward! \n"
-                f"📝 Please message @AgentG_gmetisbot to register your wallet address.\n"
+                f"📝 Please message @AgentG_gmetis to register your wallet address.\n"
                 f"💫 Your reward will be processed automatically once registered!"
             )
         else:
