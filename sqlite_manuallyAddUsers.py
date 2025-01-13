@@ -17,5 +17,3 @@ def insert_row(platform, userID, username, wa, date):
     conn.close()
 
 # Example usage
-
-
