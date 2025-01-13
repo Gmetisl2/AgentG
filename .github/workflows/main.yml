@@ -35,6 +35,7 @@ jobs:
         TG_API_HASH: ${{ secrets.TG_API_HASH }}
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         GROUP_ID: ${{ secrets.GROUP_ID }}
+        GROUP_IDPROD: ${{ secrets.GROUP_IDPROD }}
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
