@@ -14,7 +14,7 @@ import openai
 WINDOW_IN_H = 4
 TOTAL_REWARD = 100
 AMOUNT_HELD = 100
-EXCLUDED_USERS = [5571930248, 7340946957]
+EXCLUDED_USERS = []
 
 # Set up logging
 logging.basicConfig(
@@ -170,7 +170,7 @@ class TelegramManager:
         self.api_id = os.getenv('TG_API_ID')
         self.api_hash = os.getenv('TG_API_HASH')
         self.bot_token = os.getenv('BOT_TOKEN')
-        self.group_id = int(os.getenv('GROUP_ID'))
+        self.group_id = int(os.getenv('GROUP_IDPROD'))
         self.client = TelegramClient('user', self.api_id, self.api_hash)
 
     async def get_recent_messages(self, hours):
