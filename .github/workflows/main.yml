@@ -1,6 +1,7 @@
 name: Run Script Every 4 Hours
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 */4 * * *'  # Runs every 4 hours
 
