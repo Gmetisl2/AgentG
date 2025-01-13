@@ -17,3 +17,6 @@ def insert_row(platform, userID, username, wa, date):
     conn.close()
 
 # Example usage
+#insert_row('Telegram', '245', 'test', '0x123', date.today())
+
+
