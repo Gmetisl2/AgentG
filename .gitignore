@@ -1,5 +1,7 @@
 user.session*
 sqlite_manuallyAddUsers.py
+
+.users
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
