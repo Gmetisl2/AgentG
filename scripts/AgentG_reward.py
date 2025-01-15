@@ -422,7 +422,7 @@ async def main():
                 f"🎯 Reward Round #{reward_round}\n\n"
                 f"🎉 Congratulations @{winner_info['username']}! 🎉\n"
                 f"✨ You've been selected for a reward! \n"
-                f"📝 Please message @AgentG_gmetis to register your wallet address.\n"
+                f"📝 Please message @gMetisL2 to register your wallet address.\n"
                 f"💫 Your reward will be processed automatically once registered!"
             )
         else:
