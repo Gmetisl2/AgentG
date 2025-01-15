@@ -9,6 +9,8 @@ from telethon import TelegramClient
 from web3 import Web3
 from dotenv import load_dotenv
 import openai
+from telegram import Bot
+
 
 # global constants
 WINDOW_IN_H = 4
@@ -165,21 +167,61 @@ class DatabaseManager:
         return results
 
 
+# class TelegramManager:
+#     def __init__(self):
+#         self.api_id = os.getenv('TG_API_ID')
+#         self.api_hash = os.getenv('TG_API_HASH')
+#         self.bot_token = os.getenv('BOT_TOKEN')
+#         self.group_id = int(os.getenv('GROUP_IDPROD'))
+#         self.client = TelegramClient('user', self.api_id, self.api_hash)
+
+#     async def get_recent_messages(self, hours):
+#         await self.client.start()
+#         messages = []
+#         hours_ago = datetime.now(timezone.utc) - timedelta(hours=hours)
+        
+#         group = await self.client.get_entity(self.group_id)
+#         async for message in self.client.iter_messages(group):
+#             if message.date >= hours_ago:
+#                 messages.append({
+#                     "username": message.sender.username if message.sender else None,
+#                     "userid": message.sender_id,
+#                     "text": message.text,
+#                     "date": message.date.isoformat()
+#                 })
+        
+#         await self.client.disconnect()
+#         return messages
+
+#     async def send_message(self, message):
+#         await self.client.start()
+#         group = await self.client.get_entity(self.group_id)
+#         await self.client.send_message(group, message)
+#         await self.client.disconnect()
+
+
 class TelegramManager:
     def __init__(self):
+        # User client credentials for getting messages
         self.api_id = os.getenv('TG_API_ID')
         self.api_hash = os.getenv('TG_API_HASH')
-        self.bot_token = os.getenv('BOT_TOKEN')
         self.group_id = int(os.getenv('GROUP_IDPROD'))
-        self.client = TelegramClient('user', self.api_id, self.api_hash)
+        
+        # Bot credentials for sending messages
+        self.bot_token = os.getenv('BOT_TOKEN')
+        
+        # Initialize both clients
+        self.user_client = TelegramClient('user', self.api_id, self.api_hash)
+        self.bot = Bot(token=self.bot_token)
 
     async def get_recent_messages(self, hours):
-        await self.client.start()
+        """Get messages using user account"""
+        await self.user_client.start()
         messages = []
         hours_ago = datetime.now(timezone.utc) - timedelta(hours=hours)
         
-        group = await self.client.get_entity(self.group_id)
-        async for message in self.client.iter_messages(group):
+        group = await self.user_client.get_entity(self.group_id)
+        async for message in self.user_client.iter_messages(group):
             if message.date >= hours_ago:
                 messages.append({
                     "username": message.sender.username if message.sender else None,
@@ -188,14 +230,18 @@ class TelegramManager:
                     "date": message.date.isoformat()
                 })
         
-        await self.client.disconnect()
+        await self.user_client.disconnect()
         return messages
 
     async def send_message(self, message):
-        await self.client.start()
-        group = await self.client.get_entity(self.group_id)
-        await self.client.send_message(group, message)
-        await self.client.disconnect()
+        """Send message using bot account"""
+        try:
+            await self.bot.send_message(chat_id=self.group_id, text=message)
+            return True
+        except Exception as e:
+            print(f"Failed to send message: {e}")
+            return False
+
 
 class Web3Manager:
     def __init__(self):
