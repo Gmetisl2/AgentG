@@ -1,6 +1,7 @@
 user.session*
 sqlite_manuallyAddUsers.py
 messages_lh.json
+sqlite_removerewards.py
 .users
 # Byte-compiled / optimized / DLL files
 __pycache__/
