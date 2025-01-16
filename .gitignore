@@ -1,6 +1,6 @@
 user.session*
 sqlite_manuallyAddUsers.py
-
+messages_lh.json
 .users
 # Byte-compiled / optimized / DLL files
 __pycache__/
