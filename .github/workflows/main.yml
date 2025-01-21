@@ -2,7 +2,8 @@ name: run reward script
 
 on:
   workflow_dispatch:
-  
+  schedule:
+  - cron: '0 */2 * * *'  # Runs every 2 hours
 jobs:
   run-script:
     runs-on: ubuntu-latest
