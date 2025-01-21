@@ -3,6 +3,12 @@ sqlite_manuallyAddUsers.py
 messages_lh.json
 sqlite_removerewards.py
 .users
+
+
+x.zip
+ctp.txt
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,12 @@
+*.ts
+dist
+!index.ts
+!character.ts
+.env
+node_modules
+dist/
+
+.idea
+
+x.zip
+ctp.txt
