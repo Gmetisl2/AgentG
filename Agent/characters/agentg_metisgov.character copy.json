@@ -5,7 +5,7 @@
   "modelProvider": "openai",
   "settings": {
     "secrets": {
-      "TELEGRAM_BOT_TOKEN":"8059300715:AAEWIWXJmWlBEDtLLbxqQGlyNjBalcMioqk"
+      "TELEGRAM_BOT_TOKEN":""
     },
     "voice": {
       "model": "en_US-hfc_male-medium"
