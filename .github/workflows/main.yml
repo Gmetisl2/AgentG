@@ -27,7 +27,10 @@ jobs:
     - name: Decode user.session
       run: |
         echo "${{ secrets.USER_SESSION_B64_PART1 }}${{ secrets.USER_SESSION_B64_PART2 }}${{ secrets.USER_SESSION_B64_PART3 }}${{ secrets.USER_SESSION_B64_PART4 }}${{ secrets.USER_SESSION_B64_PART5 }}${{ secrets.USER_SESSION_B64_PART6 }}${{ secrets.USER_SESSION_B64_PART7 }}${{ secrets.USER_SESSION_B64_PART8 }}" | base64 --decode > user.session
-    
+  
+    - name: Run addUsersFromCSV script
+      run: python addUsersFromCSV.py
+
     - name: Run script
       env:
         TG_API_ID: ${{ secrets.TG_API_ID }}
