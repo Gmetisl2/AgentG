@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to the SQLite database
-conn = sqlite3.connect('gmetis.db')
+conn = sqlite3.connect('gmetisx.db')
 cursor = conn.cursor()
 
 # Update the table to set wa, balance, reward, and tx to NULL
