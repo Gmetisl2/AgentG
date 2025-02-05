@@ -12,7 +12,12 @@ connection_string = f'mssql+pyodbc://{username}:{password}@{server}/{database}?d
 engine = create_engine(connection_string)
 
 # Insert a new row into the TEST table
-with engine.connect() as connection:
-    insert_statement = text("INSERT INTO TEST (ID, name) VALUES (3, 'Alice Johnson')")
-    connection.execute(insert_statement)
-    print("Inserted new row into TEST table")
+try:
+    with engine.connect() as connection:
+        insert_statement = text("INSERT INTO TEST (ID, name) VALUES (3, 'Alice Johnson')")
+        result = connection.execute(insert_statement)
+        connection.commit()  # Ensure the transaction is committed
+        print("Inserted new row into TEST table")
+        print(f"Rows affected: {result.rowcount}")
+except Exception as e:
+    print(f"An error occurred: {e}")
