@@ -1,0 +1,37 @@
+name: Test Azure sql connection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install ODBC Driver for SQL Server
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y unixodbc-dev
+        sudo apt-get install -y msodbcsql18
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sqlalchemy pyodbc
+
+    - name: Run insert_test_data script
+      env:
+        AZURE_SQL_SERVER: ${{ secrets.AZURE_SQL_SERVER }}
+        AZURE_SQL_DATABASE: ${{ secrets.AZURE_SQL_DATABASE }}
+        AZURE_SQL_USERNAME: ${{ secrets.AZURE_SQL_USERNAME }}
+        AZURE_SQL_PASSWORD: ${{ secrets.AZURE_SQL_PASSWORD }}
+      run: |
+        python insert_test_data.py
