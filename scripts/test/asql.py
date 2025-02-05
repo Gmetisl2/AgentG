@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import os
 
 # Connection details from environment variables
@@ -13,5 +13,6 @@ engine = create_engine(connection_string)
 
 # Insert a new row into the TEST table
 with engine.connect() as connection:
-    connection.execute("INSERT INTO TEST (ID, name) VALUES (3, 'Alice Johnson')")
+    insert_statement = text("INSERT INTO TEST (ID, name) VALUES (3, 'Alice Johnson')")
+    connection.execute(insert_statement)
     print("Inserted new row into TEST table")
