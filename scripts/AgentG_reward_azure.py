@@ -35,21 +35,32 @@ load_dotenv()
 
 Base = declarative_base()
 
+from sqlalchemy import create_engine, text, MetaData, Table, Column, Integer, String, Date, select, desc
+from tenacity import retry, stop_after_attempt, wait_exponential
+
 class DatabaseManager:
     def __init__(self):
-        # Connection details
         server = os.getenv('AZURE_SQL_SERVER')
         database = os.getenv('AZURE_SQL_DATABASE')
         username = os.getenv('AZURE_SQL_USERNAME')
         password = os.getenv('AZURE_SQL_PASSWORD')
         
-        # Create connection string
-        # Create connection string
         self.connection_string = f'mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+18+for+SQL+Server'
         
-        # Create engine with connection timeout
-        self.engine = create_engine(self.connection_string, connect_args={'timeout': 120})
+        # Add retry logic and longer timeout
+        self.engine = create_engine(
+            self.connection_string,
+            connect_args={
+                'timeout': 300,  # Increase timeout to 5 minutes
+                'retry_with_backoff': True,
+                'backoff_factor': 2
+            },
+            pool_size=5,
+            max_overflow=10
+        )
         self.setup_database()
+
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 
     def setup_database(self):
         # Create tables using SQLAlchemy
