@@ -124,45 +124,53 @@ class DatabaseManager:
             current_date = datetime.now().date()
             if not reward_round:
                 reward_round = self.get_next_reward_round()
-
-            if tx:
-                # Update existing entry with transaction hash
-                stmt = self.rewards.update()\
-                    .where(self.rewards.c.reward_round == reward_round)\
-                    .values(tx=tx)
-                result = session.execute(stmt)
-            else:
-                # Check if entry exists
-                query = select(self.rewards.c.ID)\
-                    .where(self.rewards.c.reward_round == reward_round)
-                existing = session.execute(query).first()
-
-                if existing:
-                    # Update existing entry
-                    stmt = self.rewards.update()\
-                        .where(self.rewards.c.reward_round == reward_round)\
-                        .values(
+    
+            try:
+                if tx:
+                    # Update existing entry with transaction hash
+                    stmt = update(self.rewards).where(
+                        (self.rewards.c.reward_round == reward_round) & 
+                        (self.rewards.c.userid == userid)
+                    ).values(tx=tx)
+                    session.execute(stmt)
+                else:
+                    # Check if entry exists for this reward round and user
+                    query = select(self.rewards.c.ID).where(
+                        (self.rewards.c.reward_round == reward_round) & 
+                        (self.rewards.c.userid == userid)
+                    )
+                    existing = session.execute(query).first()
+    
+                    if existing:
+                        # Update existing entry
+                        stmt = update(self.rewards).where(
+                            (self.rewards.c.reward_round == reward_round) & 
+                            (self.rewards.c.userid == userid)
+                        ).values(
                             wa=wa,
                             balance=balance,
                             reward=reward,
                             date=current_date
                         )
-                    session.execute(stmt)
-                else:
-                    # Create new entry
-                    stmt = self.rewards.insert().values(
-                        userid=userid,
-                        wa=wa,
-                        balance=balance,
-                        reward=reward,
-                        tx=tx,
-                        date=current_date,
-                        reward_round=reward_round
-                    )
-                    result = session.execute(stmt)
-
-            session.commit()
-            return reward_round
+                        session.execute(stmt)
+                    else:
+                        # Create new entry
+                        stmt = insert(self.rewards).values(
+                            userid=userid,
+                            wa=wa,
+                            balance=balance,
+                            reward=reward,
+                            tx=tx,
+                            date=current_date,
+                            reward_round=reward_round
+                        )
+                        result = session.execute(stmt)
+    
+                session.commit()
+                return reward_round
+            except Exception as e:
+                session.rollback()
+                raise
 
     def add_pending_reward(self, userid):
         with Session(self.engine) as session:
