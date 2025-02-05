@@ -57,3 +57,4 @@ urllib3==2.2.3
 web3==7.6.1
 websockets==13.1
 yarl==1.18.3
+tenacity==8.2.3
