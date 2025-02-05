@@ -44,12 +44,12 @@ class DatabaseManager:
         password = os.getenv('AZURE_SQL_PASSWORD')
         
         # Create connection string
-    # Create connection string
-    self.connection_string = f'mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+18+for+SQL+Server'
-    
-    # Create engine with connection timeout
-    self.engine = create_engine(self.connection_string, connect_args={'timeout': 120})
-    self.setup_database()
+        # Create connection string
+        self.connection_string = f'mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+18+for+SQL+Server'
+        
+        # Create engine with connection timeout
+        self.engine = create_engine(self.connection_string, connect_args={'timeout': 120})
+        self.setup_database()
 
     def setup_database(self):
         # Create tables using SQLAlchemy
