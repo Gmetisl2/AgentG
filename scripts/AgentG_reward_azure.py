@@ -12,7 +12,7 @@ import openai
 from telegram import Bot
 
 #Azure
-from sqlalchemy import create_engine, text, MetaData, Table, Column, Integer, String, Date, select, desc
+from sqlalchemy import create_engine, text, MetaData, Table, Column, Integer, String, Date, select, desc, insert, update 
 from sqlalchemy.orm import declarative_base, Session
 
 
