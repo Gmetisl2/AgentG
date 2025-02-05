@@ -34,4 +34,4 @@ jobs:
         AZURE_SQL_USERNAME: ${{ secrets.AZURE_SQL_USERNAME }}
         AZURE_SQL_PASSWORD: ${{ secrets.AZURE_SQL_PASSWORD }}
       run: |
-        python insert_test_data.py
+        python scripts/test/asql.py
