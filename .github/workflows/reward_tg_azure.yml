@@ -57,7 +57,7 @@ jobs:
         AZURE_SQL_USERNAME: ${{ secrets.AZURE_SQL_USERNAME }}
         AZURE_SQL_PASSWORD: ${{ secrets.AZURE_SQL_PASSWORD }}
       run: |
-        python scripts/AgentG_reward.py
+        python scripts/AgentG_reward_azure.py
     
     - name: Commit and push changes
       run: |
