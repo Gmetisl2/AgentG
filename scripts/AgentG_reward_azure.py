@@ -96,7 +96,7 @@ class DatabaseManager:
     def get_last_winner(self):
         with Session(self.engine) as session:
             query = select(self.rewards.c.userid)\
-                .order_by(desc(self.rewards.c.date), desc(self.rewards.c.ID))\
+                .order_by(desc(self.rewards.c.date), desc(self.rewards.c.reward_round))\
                 .limit(1)
             result = session.execute(query).first()
             return result[0] if result else None
