@@ -407,9 +407,9 @@ async def main():
         winner_id = get_most_engaging_member(messages, EXCLUDED_USERS)
         winner_info = next((m for m in messages if str(m['userid']) == str(winner_id)), None)
         
-        if not winner_info:
+        if not winner_info or winner_info['username']==None or winner_info['username']=="None":
             logger.error("Winner not found in messages")
-            await tg_manager.send_message("Seems like we don't have much of a crowd here huh? ")
+            #await tg_manager.send_message("Seems like we don't have much of a crowd here huh? ")
             return
             return
         
