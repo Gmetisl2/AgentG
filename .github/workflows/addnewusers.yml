@@ -1,5 +1,4 @@
-name: run reward TG Azure script
-
+name: add new users
 on:
   workflow_dispatch:
 
