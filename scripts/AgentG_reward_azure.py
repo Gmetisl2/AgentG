@@ -18,7 +18,7 @@ from sqlalchemy.orm import declarative_base, Session
 
 
 # global constants
-WINDOW_IN_H = 2
+WINDOW_IN_H = 3
 TOTAL_REWARD = 50000
 AMOUNT_HELD = 1000000
 EXCLUDED_USERS = [7340946957,5571930248, 7843080080, 7694522043, 609517172, 301429358]
