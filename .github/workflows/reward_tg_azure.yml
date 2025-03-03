@@ -2,8 +2,8 @@ name: run reward TG Azure script
 
 on:
   workflow_dispatch:
-  schedule:
-  - cron: '0 */6 * * *'  # Runs every 6 hours
+  #schedule:
+  #- cron: '0 */6 * * *'  # Runs every 6 hours
 
 
 
